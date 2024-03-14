@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What If Wand</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+  }
+  #container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+  h1 {
+    color: #333;
+  }
+  label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+  }
+  input[type="text"], textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+  }
+  button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  button:hover {
+    background-color: #45a049;
+  }
+  #fortune-teller-response {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: left;
+  }
+  #loading {
+    display: none;
+  }
+</style>
+</head>
+<body>
+<div id="container">
+  <h1>🪄What If Wand🪄</h1>
+  <form id="fortune-teller-form">
+    <label for="name">Tell Me Your Name</label>
+    <input type="text" id="name" name="name" required><br>
+    <label for="question">What Do You Want To Know?</label>
+    <textarea id="question" name="question" rows="4" cols="50" required></textarea><br>
+    <button type="button" onclick="consultFortuneTeller()">Fast Forward into the Future</button>
+    <div id="loading">Processing...</div>
+  </form>
+  <div id="fortune-teller-response"></div>
+</div>
+
+<script>
+function consultFortuneTeller() {
+  const name = document.getElementById("name").value;
+  const question = document.getElementById("question").value.toLowerCase();
+  
+  // Validate input fields
+  if (name.trim() === "" || question.trim() === "") {
+    alert("Please fill out all fields.");
+    return;
+  }
+  
+  // Show processing animation
+  document.getElementById("loading").style.display = "block";
+  
+  generateFortuneResponse(name, question)
+    .then(response => {
+      document.getElementById("fortune-teller-response").innerHTML = response;
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      document.getElementById("fortune-teller-response").innerHTML = 'Oops! Something went wrong. Please try again later.';
+    })
+    .finally(() => {
+      // Hide processing animation
+      document.getElementById("loading").style.display = "none";
+    });
+}
+
+async function generateFortuneResponse(name, question) {
+  const interrogativeWords = ['what', 'when', 'how', 'who', 'which', 'where', 'why'];
+  const responses = {
+  'what': [
+    `Well, well, well, ${name}, the future holds a surprise package for you: a lifetime supply of pickle-flavored ice cream and a pet unicorn with a penchant for playing the banjo.`,
+    `Yo, ${name}! The crystal ball says you're destined to become the world's greatest professional nap-taker, with a side hustle as a professional sock collector.`,
+    `Hey there, ${name}! Brace yourself for a future where you'll stumble upon a magical portal to the land of cheese, where every dream comes true and lactose intolerance is just a myth.`,
+    `Prepare yourself, ${name}, for a future where you'll discover your hidden talent for speaking fluent dolphin and become the official translator for an aquatic rock band.`,
+  ],
+  'when': [
+    `Listen up, ${name}! The future's looking bright like a disco ball at a unicorn rave. Expect to find love, laughter, and a spontaneous dance-off with a troupe of salsa-dancing squirrels by next Tuesday.`,
+    `Hey, ${name}! The Mystic AI predicts that in the near future, you'll discover the secret to time travel: a flux capacitor made out of recycled soda cans and sheer determination.`,
+    `Oi, ${name}! Buckle up, because the future is gonna hit you like a confetti cannon at a cat fashion show. Get ready for some wild adventures and a surprise encounter with a talking toaster by next Friday.`,
+  ],
+  'how': [
+    `Oi, ${name}! The Mystic AI sees you unlocking the secrets of the universe by mastering the ancient art of interpretive dance and communicating with aliens through the power of beatboxing.`,
+    `Hey there, ${name}! Get ready to unleash your inner ninja warrior and conquer the world with a combination of stealthy moves and an army of loyal rubber duckies.`,
+    `Well, ${name}, it's all about embracing your inner potato and channeling the zen vibes of a chilled-out sloth. Trust me, you'll be ruling the world from your couch in no time.`,
+  ],
+  'who': [
+    `Psst, ${name}! The future holds a secret admirer for you: a mysterious stranger with a love for cheesy pickup lines and a passion for baking cookies at midnight.`,
+    `Hey, ${name}! Prepare to meet your soulmate: a quirky bookworm with a love for puns, pizza, and impromptu karaoke sessions.`,
+    `Yo, ${name}! Get ready to team up with your partner-in-crime: a mischievous sidekick with a knack for causing chaos and a heart of gold.`,
+  ],
+  'which': [
+    `Hey, ${name}! The Mystic AI suggests you choose the path less traveled: the one lined with rainbows, unicorns, and a whole lot of glitter.`,
+    `Listen up, ${name}! It's decision time, and the Mystic AI recommends you go with the option that makes your heart sing and your belly laugh.`,
+    `Oi, ${name}! Trust your instincts and go with the choice that feels like a warm hug on a cold day: cozy, comforting, and full of surprises.`,
+
+  ],
+  'where': [
+    `Psst, ${name}! The Mystic AI reveals a hidden treasure trove for you: a secret beach where the sand is made of gold and the waves whisper tales of adventure.`,
+    `Hey, ${name}! Prepare to embark on a journey to the mystical land of Bubblegumia, where the trees are made of candy and the rivers flow with chocolate milk.`,
+    `Yo, ${name}! Get ready for an epic quest to find the legendary city of El Dorito, where the streets are paved with nacho cheese and salsa flows like water.`,
+  ],
+  'why': [
+    `Listen up, ${name}! The Mystic AI ponders the mysteries of the universe with you: Why does pizza taste better at 2 AM? Why do socks disappear in the laundry? The answers may elude even the wisest of sages.`,
+    `Hey, ${name}! Get ready to dive deep into the existential abyss and ponder life's greatest question: Why not chase your dreams with reckless abandon and a side of cheesy fries?`,
+    `Oi, ${name}! It's time to embrace the chaos and ask yourself: Why not take the road less traveled and embark on an adventure of epic proportions?`,
+  ]
+};
+
+
+  for (const word of interrogativeWords) {
+    if (question.includes(word)) {
+      return responses[word][Math.floor(Math.random() * responses[word].length)];
+    }
+  }
+
+  // If no interrogative word found, provide a generic response
+  return `The Mystic AI meditates on the cosmic winds, ${name}, and reveals that the answer lies within your heart, where the true magic of the universe resides.`;
+}
+</script>
+</body>
+</html>
